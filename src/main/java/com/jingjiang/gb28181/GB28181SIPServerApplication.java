@@ -48,7 +48,7 @@ public class GB28181SIPServerApplication {
 
 
     @GetMapping("/play")
-    public void play(String host, String channelId, Integer port) throws InvalidArgumentException, ParseException, SipException {
+    public void play(String host, String channelId, Integer port) throws InvalidArgumentException, ParseException, SipException, InterruptedException {
         gb28181ApplicationService.play(host, channelId, port);
     }
 

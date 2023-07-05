@@ -59,7 +59,7 @@ jib {
     }
     to {
         image = 'gb-28181-sip-server'
-        tags = ['0.0.3']
+        tags = ['0.0.5']
     }
     container {
         creationTime = 'USE_CURRENT_TIMESTAMP'

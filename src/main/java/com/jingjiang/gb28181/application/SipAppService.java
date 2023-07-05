@@ -114,7 +114,7 @@ public class SipAppService {
      * @throws SipException             Sip异常
      * @throws ParseException           解析异常
      */
-    public void play(String host, String channelId, Integer port) throws InvalidArgumentException, SipException, ParseException {
+    public synchronized void play(String host, String channelId, Integer port) throws InvalidArgumentException, SipException, ParseException, InterruptedException {
 
         Optional<Stream> optional = streamRepository.findStreamByHostAndChannelId(host, channelId);
 
@@ -134,6 +134,9 @@ public class SipAppService {
             ClientTransaction transaction = sipProvider.getNewClientTransaction(request);
 
             transaction.sendRequest();
+
+            // 简单处理-待优化-等待100毫秒，用于等待回复
+            Thread.sleep(100L);
 
             streamRepository.save(Stream.builder().host(host).channelId(channelId).branchId(transaction.getBranchId()).callId(callID.getCallId()).fromTag(fromTag).viaTag(viaTag).build());
         } else {
