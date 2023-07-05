@@ -1,0 +1,44 @@
+debug: true
+
+spring:
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+  datasource:
+    username: sa
+    password: 123456
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./db/GB28181
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+sip:
+  # [必须修改] 本机的IP
+  ip: 0.0.0.0
+  # [可选] 28181服务监听的端口
+  port: 5060
+  # 根据国标6.1.2中规定，domain宜采用ID统一编码的前十位编码。
+  domain: 4401020049
+  # 国标附录D中定义前8位为中心编码（由省级、市级、区级、基层编号组成，参照GB/T 2260-2007）
+  # 后两位为行业编码，定义参照附录D.3
+  id: 44010200492000000001
+  # 密码
+  password: 123456
+  # 协议
+  protocol: TCP,UDP
+media:
+  secret: 035c73f7-bb6b-4889-a715-d9eb2d1925cc
+  # 流媒体的内网API地址
+  host: http://zlmediakit
+  # 流媒体服务器地址，必须为录像机可访问到的公网IP
+  address: 139.9.61.184
+server:
+  port: 1000
+
+logging:
+  level:
+    com:
+      jingjiang: debug
