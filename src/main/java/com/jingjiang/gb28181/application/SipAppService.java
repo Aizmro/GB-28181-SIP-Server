@@ -21,6 +21,8 @@ import javax.sip.message.Request;
 import java.text.ParseException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 /**
@@ -30,6 +32,7 @@ import java.util.Optional;
 public class SipAppService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SipAppService.class);
+    public final static ConcurrentHashMap<String, ReentrantLock> hostLockMap = new ConcurrentHashMap<>();
 
     private final DeviceRepository deviceRepository;
     private final StreamRepository streamRepository;
@@ -115,7 +118,6 @@ public class SipAppService {
      * @throws ParseException           解析异常
      */
     public synchronized void play(String host, String channelId, Integer port) throws InvalidArgumentException, SipException, ParseException, InterruptedException {
-
         Optional<Stream> optional = streamRepository.findStreamByHostAndChannelId(host, channelId);
 
         if (optional.isEmpty()) {
